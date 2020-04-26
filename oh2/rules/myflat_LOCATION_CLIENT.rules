@@ -1,0 +1,67 @@
+
+import LOCATION_NAME_CLIENT_NAME_last_update;
+import LOCATION_NAME_CLIENT_NAME_temperature_actual;
+import LOCATION_NAME_CLIENT_NAME_is_online;
+
+// ------------------------------------------------------------------------
+
+rule "LOCATION_NAME_CLIENT_NAME_lastupdate_rule"
+when
+    Item LOCATION_NAME_CLIENT_NAME_temperature_actual received update
+then
+    LOCATION_NAME_CLIENT_NAME_last_update.postUpdate( new DateTimeType() )
+end
+
+// ------------------------------------------------------------------------
+
+rule "LOCATION_NAME_CLIENT_NAME_Telegram_Offline_Warning"
+when
+    // every hour
+	Time cron "0 0 * ? * *"
+then
+    if (LOCATION_NAME_CLIENT_NAME_is_online.state != NULL) {
+        if (LOCATION_NAME_CLIENT_NAME_is_online.state == OFF) {
+	        sendTelegram("sebastianIphoneX", "CLIENT_NAME (LOCATION_NAME) is offline !!!")
+        }
+    }
+end
+
+// ------------------------------------------------------------------------
+
+rule "LOCATION_NAME_CLIENT_NAME_Telegram_Dayly_Report"
+when
+    // every day at 10am
+	Time cron "0 0 5 * * ?"
+then
+    if (LOCATION_NAME_CLIENT_NAME_is_online.state != NULL) {
+        if (LOCATION_NAME_CLIENT_NAME_is_online.state == ON) {
+            sendTelegram("sebastianIphoneX", "CLIENT_NAME(LOCATION_NAME): Temeprature: " + LOCATION_NAME_CLIENT_NAME_temperature_actual + " Humidity: " + LOCATION_NAME_CLIENT_NAME_humidity_actual + " Ambilight: " + LOCATION_NAME_CLIENT_NAME_ambilight_actual)
+        }
+    }
+end
+
+// ------------------------------------------------------------------------
+
+rule "LOCATION_NAME_CLIENT_NAME_isonline_rule"
+when
+    // every 5 minutes
+    Time cron "0 */5 * ? * *"
+then
+    if (LOCATION_NAME_CLIENT_NAME_is_online.state == NULL) {
+        LOCATION_NAME_CLIENT_NAME_is_online.state = OFF
+    }
+
+    if (LOCATION_NAME_CLIENT_NAME_last_update.state == NULL) {
+        LOCATION_NAME_CLIENT_NAME_is_online.state = OFF
+
+    } else  if ( now.isAfter(new DateTime((LOCATION_NAME_CLIENT_NAME_last_update.state as DateTimeType).getZonedDateTime.toInstant.toEpochMilli).plusMinutes(15))) {
+        if (LOCATION_NAME_CLIENT_NAME_is_online.state == ON) {
+            LOCATION_NAME_CLIENT_NAME_is_online.sendCommand(OFF)
+        }
+        
+    } else {
+        if (LOCATION_NAME_CLIENT_NAME_is_online.state == OFF) {
+            LOCATION_NAME_CLIENT_NAME_is_online.sendCommand(ON)
+        }
+    }
+end
