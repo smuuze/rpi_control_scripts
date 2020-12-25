@@ -1,0 +1,24 @@
+Switch	LOCATION_NAME_TV_NAME_tv_shutdown     	"LOCATION_NAME TV_NAME TV power on" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_power_on]"}
+Switch	LOCATION_NAME_TV_NAME_tv_stop		"LOCATION_NAME TV_NAME TV power off" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_power_off]"}
+
+Switch	LOCATION_NAME_TV_NAME_tv_vol_up		"LOCATION_NAME TV_NAME TV volume up" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_volume_up]"}
+Switch	LOCATION_NAME_TV_NAME_tv_vol_down	"LOCATION_NAME TV_NAME TV volume down" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_volume_down]"}
+Switch	LOCATION_NAME_TV_NAME_tv_mute     	"LOCATION_NAME TV_NAME TV mute" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_mute]"}
+
+Switch	LOCATION_NAME_TV_NAME_tv_channel_up	"LOCATION_NAME TV_NAME TV channel up" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_channel_up]"}
+Switch	LOCATION_NAME_TV_NAME_tv_channel_down	"LOCATION_NAME TV_NAME TV channel down" 	{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_channel_down]"}
+Switch	LOCATION_NAME_TV_NAME_tv_program_guide	"LOCATION_NAME TV_NAME TV program guide" 	{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_program_guide]"}
+
+Switch	LOCATION_NAME_TV_NAME_tv_play		"LOCATION_NAME TV_NAME TV play" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_play]"}
+Switch	LOCATION_NAME_TV_NAME_tv_pause		"LOCATION_NAME TV_NAME TV pause" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_pause]"}
+Switch	LOCATION_NAME_TV_NAME_tv_stop		"LOCATION_NAME TV_NAME TV stop" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_stop]"}
+
+Switch	LOCATION_NAME_TV_NAME_tv_home		"LOCATION_NAME TV_NAME TV home" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_home]"}
+Switch	LOCATION_NAME_TV_NAME_tv_enter		"LOCATION_NAME TV_NAME TV enter" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_enter]"}
+Switch	LOCATION_NAME_TV_NAME_tv_exit		"LOCATION_NAME TV_NAME TV exit" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_exit]"}
+Switch	LOCATION_NAME_TV_NAME_tv_return		"LOCATION_NAME TV_NAME TV return" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_return]"}
+
+Switch	LOCATION_NAME_TV_NAME_tv_arrow_up	"LOCATION_NAME TV_NAME TV arrow up" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_arrow_up]"}
+Switch	LOCATION_NAME_TV_NAME_tv_arrow_down	"LOCATION_NAME TV_NAME TV arrow down" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_arrow_down]"}
+Switch	LOCATION_NAME_TV_NAME_tv_arrow_left	"LOCATION_NAME TV_NAME TV arrow left" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_arrow_left]"}
+Switch	LOCATION_NAME_TV_NAME_tv_arrow_right	"LOCATION_NAME TV_NAME TV arrow right" 		{mqtt=">[pluto:myflat/LOCATION_NAME/TV_NAME:command:ON:tv_arrow_right]"}
