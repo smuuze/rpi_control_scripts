@@ -19,8 +19,8 @@ sed -i "s/LOCATION_NAME/$1/g" myflat_$1_$2_TASMOTA.items
 sed -i "s/LOCATION_NAME/$1/g" myflat_$1_$2_TASMOTA.rules
 
 echo "Set TASMOTA: $2"
-sed -i "s/TASMOTA_NAME/$2/g" myflat_$1_$2_TASMOTA.items
-sed -i "s/TASMOTA_NAME/$2/g" myflat_$1_$2_TASMOTA.rules
+sed -i "s/CLIENT_NAME/$2/g" myflat_$1_$2_TASMOTA.items
+sed -i "s/CLIENT_NAME/$2/g" myflat_$1_$2_TASMOTA.rules
 
 echo "Moving File: myflat_$1_$2_TASMOTA.items"
 
