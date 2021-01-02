@@ -1,0 +1,1 @@
+Switch	LOCATION_NAME_SCENE_NAME_scene_activate     	"LOCATION_NAME SCENE_NAME activate" 	{mqtt=">[pluto:myflat/LOCATION_NAME/SCENE_NAME:command:ON:tv_power_on]"}
