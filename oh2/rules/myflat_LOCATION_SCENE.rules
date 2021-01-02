@@ -3,7 +3,7 @@ import LOCATION_NAME_SCENE_NAME_scene_activate;
 
 // ------------------------------------------------------------------------
 
-rule "LOCATION_NAME_CLIENT_NAME_lastupdate_rule"
+rule "LOCATION_NAME_SCENE_NAME_scene_rule"
 when
     Item LOCATION_NAME_SCENE_NAME_scene_activate received update
 then
