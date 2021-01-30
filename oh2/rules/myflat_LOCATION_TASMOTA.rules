@@ -3,10 +3,12 @@ import LOCATION_NAME_CLIENT_NAME_energy_json;
 import LOCATION_NAME_CLIENT_NAME_energy_total;
 import LOCATION_NAME_CLIENT_NAME_energy_today;
 import LOCATION_NAME_CLIENT_NAME_energy_yesterday;
+import LOCATION_NAME_CLIENT_NAME_energy_power;
 
 import  LOCATION_NAME_CLIENT_NAME_energy_total_string;
 import  LOCATION_NAME_CLIENT_NAME_energy_today_string;
 import  LOCATION_NAME_CLIENT_NAME_energy_yersterday_string;
+import  LOCATION_NAME_CLIENT_NAME_energy_power_string;
 
 rule "LOCATION_NAME_CLIENT_NAME_energy_info"
 when
@@ -26,4 +28,5 @@ then
 	LOCATION_NAME_CLIENT_NAME_energy_total_string.postUpdate(LOCATION_NAME_CLIENT_NAME_energy_total.state + " kW/h")
 	LOCATION_NAME_CLIENT_NAME_energy_today_string.postUpdate(LOCATION_NAME_CLIENT_NAME_energy_today.state + " kW/h")
 	LOCATION_NAME_CLIENT_NAME_energy_yersterday_string.postUpdate(LOCATION_NAME_CLIENT_NAME_energy_yesterday.state + " kW/h")
+	LOCATION_NAME_CLIENT_NAME_energy_power_string.postUpdate(LOCATION_NAME_CLIENT_NAME_energy_power.state + " W")
  end
