@@ -5,7 +5,8 @@ import LOCATION_NAME_CLIENT_NAME_energy_yesterday;
 
 rule "LOCATION_NAME_CLIENT_NAME_energy"
 when
-	Time cron "0 0/5 * 1/1 * ? *"
+	//Time cron "0 0/5 * 1/1 * ? *"
+	Time cron "15 20 0 1/1 * ? *" // 1 minute past  Midnight every day
  then
 
 	sendTelegram("sebastianIphoneX", "LOCATION_NAME CLIENT_NAME Energy"
