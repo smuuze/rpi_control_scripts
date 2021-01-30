@@ -1,2 +1,7 @@
 Switch	LOCATION_NAME_CLIENT_NAME_power1 "LOCATION_NAME CLIENT_NAME Power1" {mqtt=">[pluto:myflat/LOCATION_NAME/CLIENT_NAME/cmnd/POWER1:command:ON:ON],>[pluto:myflat/LOCATION_NAME/CLIENT_NAME/cmnd/POWER1:command:OFF:OFF]"}
 Switch	LOCATION_NAME_CLIENT_NAME_power2 "LOCATION_NAME CLIENT_NAME Power2" {mqtt=">[pluto:myflat/LOCATION_NAME/CLIENT_NAME/cmnd/POWER2:command:ON:ON],>[pluto:myflat/LOCATION_NAME/CLIENT_NAME/cmnd/POWER2:command:OFF:OFF]"}
+String  LOCATION_NAME_CLIENT_NAME_json "LOCATION_NAME CLIENT_NAME Energy (JSON)" {mqtt="<[pluto:myflat/LOCATION_NAME/CLIENT_NAME/tele/SENSOR:state:JSONPATH($.ENERGY)]"}
+String  LOCATION_NAME_CLIENT_NAME_time   "LOCATION_NAME CLIENT_NAME Time"   {mqtt="<[pluto:myflat/LOCATION_NAME/CLIENT_NAME/tele/SENSOR:state:JSONPATH($.Time)]"}
+Number  LOCATION_NAME_CLIENT_NAME_energy_total "LOCATION_NAME CLIENT_NAME Energy (Total)" {mqtt="<[pluto:myflat/LOCATION_NAME/CLIENT_NAME/tele/SENSOR:state:JSONPATH($.ENERGY.Total)]"}
+Number  LOCATION_NAME_CLIENT_NAME_energy_today "LOCATION_NAME CLIENT_NAME Energy (Today)" {mqtt="<[pluto:myflat/LOCATION_NAME/CLIENT_NAME/tele/SENSOR:state:JSONPATH($.ENERGY.Today)]"}
+Number  LOCATION_NAME_CLIENT_NAME_energy_yesterday "LOCATION_NAME CLIENT_NAME Energy (Yesterday)" {mqtt="<[pluto:myflat/LOCATION_NAME/CLIENT_NAME/tele/SENSOR:state:JSONPATH($.ENERGY.Yesterday)]"}
