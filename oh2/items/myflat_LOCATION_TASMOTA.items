@@ -5,4 +5,6 @@ String  LOCATION_NAME_CLIENT_NAME_time   "LOCATION_NAME CLIENT_NAME Time"   {mqt
 Number  LOCATION_NAME_CLIENT_NAME_energy_total "LOCATION_NAME CLIENT_NAME Energy (Total)" {mqtt="<[pluto:myflat/LOCATION_NAME/CLIENT_NAME/tele/SENSOR:state:JSONPATH($.ENERGY.Total)]"}
 Number  LOCATION_NAME_CLIENT_NAME_energy_today "LOCATION_NAME CLIENT_NAME Energy (Today)" {mqtt="<[pluto:myflat/LOCATION_NAME/CLIENT_NAME/tele/SENSOR:state:JSONPATH($.ENERGY.Today)]"}
 Number  LOCATION_NAME_CLIENT_NAME_energy_yesterday "LOCATION_NAME CLIENT_NAME Energy (Yesterday)" {mqtt="<[pluto:myflat/LOCATION_NAME/CLIENT_NAME/tele/SENSOR:state:JSONPATH($.ENERGY.Yesterday)]"}
-String  LOCATION_NAME_CLIENT_NAME_energy_string
+String  LOCATION_NAME_CLIENT_NAME_energy_total_string
+String  LOCATION_NAME_CLIENT_NAME_energy_today_string
+String  LOCATION_NAME_CLIENT_NAME_energy_yersterday_string
