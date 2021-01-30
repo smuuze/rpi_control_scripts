@@ -16,8 +16,8 @@ when
 
 rule "LOCATION_NAME_CLIENT_NAME_energy_string"
 when
-	LOCATION_NAME_CLIENT_NAME_json changed
- then
+	Item LOCATION_NAME_CLIENT_NAME_json changed
+then
 	LOCATION_NAME_CLIENT_NAME_energy_string = "Energy:"
 			+ "\n- Total: " + LOCATION_NAME_CLIENT_NAME_energy_total.state + "VA"
 			+ "\n- Today: " + LOCATION_NAME_CLIENT_NAME_energy_today.state + "VA"
