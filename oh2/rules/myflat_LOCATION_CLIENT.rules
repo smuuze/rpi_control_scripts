@@ -31,7 +31,7 @@ end
 
 rule "LOCATION_NAME_CLIENT_NAME_Telegram_Offline_Warning"
 when
-	/ every hour
+	// every hour
 	Time cron "0 0 * ? * *"
 then
 	if (LOCATION_NAME_CLIENT_NAME_is_online.state != NULL) {
