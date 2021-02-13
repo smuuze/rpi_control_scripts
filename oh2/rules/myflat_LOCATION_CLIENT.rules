@@ -1,41 +1,59 @@
 
 import LOCATION_NAME_CLIENT_NAME_last_update;
-import LOCATION_NAME_CLIENT_NAME_temperature_actual;
 import LOCATION_NAME_CLIENT_NAME_is_online;
+import LOCATION_NAME_CLIENT_NAME_system_uptime;
+
+import LOCATION_NAME_CLIENT_NAME_humidity_actual
+import LOCATION_NAME_CLIENT_NAME_temperature_actual;
+import LOCATION_NAME_CLIENT_NAME_ambilight_actual;
+
+import LOCATION_NAME_CLIENT_NAME_light01_ontime;
+import LOCATION_NAME_CLIENT_NAME_light02_ontime;
+import LOCATION_NAME_CLIENT_NAME_light03_ontime;
+import LOCATION_NAME_CLIENT_NAME_light04_ontime;
+
+import LOCATION_NAME_CLIENT_NAME_output_state_1_millis;
+import LOCATION_NAME_CLIENT_NAME_output_state_2_millis;
+import LOCATION_NAME_CLIENT_NAME_output_state_3_millis;
+import LOCATION_NAME_CLIENT_NAME_output_state_4_millis;
+
 
 // ------------------------------------------------------------------------
 
 rule "LOCATION_NAME_CLIENT_NAME_lastupdate_rule"
 when
-    Item LOCATION_NAME_CLIENT_NAME_temperature_actual received update
+	Item LOCATION_NAME_CLIENT_NAME_system_uptime received update
 then
-    LOCATION_NAME_CLIENT_NAME_last_update.postUpdate( new DateTimeType() )
+	LOCATION_NAME_CLIENT_NAME_last_update.postUpdate( new DateTimeType() )
 end
 
 // ------------------------------------------------------------------------
 
 rule "LOCATION_NAME_CLIENT_NAME_Telegram_Offline_Warning"
 when
-    // every hour
+	/ every hour
 	Time cron "0 0 * ? * *"
 then
-    if (LOCATION_NAME_CLIENT_NAME_is_online.state != NULL) {
-        if (LOCATION_NAME_CLIENT_NAME_is_online.state == OFF) {
-	        sendTelegram("sebastianIphoneX", "CLIENT_NAME (LOCATION_NAME) is offline !!!")
-        }
-    }
+	if (LOCATION_NAME_CLIENT_NAME_is_online.state != NULL) {
+		if (LOCATION_NAME_CLIENT_NAME_is_online.state == OFF) {
+		sendTelegram("sebastianIphoneX", "CLIENT_NAME (LOCATION_NAME) is offline !!!")
+		}
+	}
 end
 
 // ------------------------------------------------------------------------
 
 rule "LOCATION_NAME_CLIENT_NAME_Telegram_Dayly_Report"
 when
-    // every day at 10am
+    // every day at 6 am
 	Time cron "0 0 5 * * ?"
 then
     if (LOCATION_NAME_CLIENT_NAME_is_online.state != NULL) {
         if (LOCATION_NAME_CLIENT_NAME_is_online.state == ON) {
-            sendTelegram("sebastianIphoneX", "CLIENT_NAME(LOCATION_NAME): Temeprature: " + LOCATION_NAME_CLIENT_NAME_temperature_actual + " Humidity: " + LOCATION_NAME_CLIENT_NAME_humidity_actual + " Ambilight: " + LOCATION_NAME_CLIENT_NAME_ambilight_actual)
+            sendTelegram("sebastianIphoneX", "LOCATION_NAME CLIENT_NAME - Report:"
+	    		+ "\n- Temperature: " + LOCATION_NAME_CLIENT_NAME_temperature_actual.state + " C"
+			+ "\n- Humidity: " + LOCATION_NAME_CLIENT_NAME_humidity_actual.state + " %"
+			+ "\n- Ambilight: " + LOCATION_NAME_CLIENT_NAME_ambilight_actual.state + " %")
         }
     }
 end
@@ -65,3 +83,48 @@ then
         }
     }
 end
+
+// ------------------------------------------------------------------------
+
+rule "LOCATION_NAME_CLIENT_NAME_OUTPUTSTATE_1_received_update"
+when
+	Item LOCATION_NAME_CLIENT_NAME_output_state_1_millis changed
+then
+
+	var on_time_sec = LOCATION_NAME_CLIENT_NAME_output_state_1_millis.state / 1000
+	var seconds_per_hour = 3600
+	var seconds_per_minute = 60
+
+	var hours = 0
+	var minutes = 0
+	var seconds = 0
+
+	var i = seconds_per_hour
+	while ( i <= on_time_sec) {
+		i = i + seconds_per_hour
+		hours = hours + 1
+	}
+
+	if (hours * seconds_per_hour < on_time_sec) {
+		on_time_sec = on_time_sec - (hours * seconds_per_hour)
+	}
+
+	i = seconds_per_minute
+	while ( i <= on_time_sec) {
+		i = i + seconds_per_minute
+		minutes = minutes + 1
+	}
+
+	if (minutes * seconds_per_minute < on_time_sec) {
+		on_time_sec = on_time_sec - (minutes * seconds_per_hour)
+	}
+
+	i = 0
+	while ( i <= on_time_sec) {
+		i = i + 1
+		seconds = seconds + 1
+	}
+
+	var stringTime = String::format("%1$02d:%2$02d:%3$02d", hours, minutes, seconds)
+	LOCATION_NAME_CLIENT_NAME_light01_ontime.postUpdate(stringTime)
+ end
