@@ -97,8 +97,8 @@ then
 	// using while-loop, becaus using '/' produces 
 	// Eroor: "Unknown variable or command '/';"
 	while (on_time_millis > 1000) {
-		on_time_sec = on_time_sec + 1;
-		on_time_millis = on_time_millis - 1000;
+		on_time_sec = on_time_sec + 1
+		on_time_millis = on_time_millis - 1000
 	}
 
 	var seconds_per_hour = 3600
