@@ -91,7 +91,9 @@ when
 	Item LOCATION_NAME_CLIENT_NAME_output_state_1_millis changed
 then
 
-	var on_time_sec = LOCATION_NAME_CLIENT_NAME_output_state_1_millis.state / 1000
+	var on_time_sec = LOCATION_NAME_CLIENT_NAME_output_state_1_millis.state
+	on_time_sec = on_time_sec/1000
+
 	var seconds_per_hour = 3600
 	var seconds_per_minute = 60
 
