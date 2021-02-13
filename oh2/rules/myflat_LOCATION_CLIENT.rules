@@ -91,8 +91,17 @@ when
 	Item LOCATION_NAME_CLIENT_NAME_output_state_1_millis changed
 then
 
-	var on_time_millis = LOCATION_NAME_CLIENT_NAME_output_state_1_millis.state
-	var on_time_sec = 0
+	var NUMBER on_time_millis = LOCATION_NAME_CLIENT_NAME_output_state_1_millis.state
+	var NUMBER on_time_sec = 0
+
+	var NUMBER seconds_per_hour = 3600
+	var NUMBER seconds_per_minute = 60
+
+	var NUMBER hours = 0
+	var NUMBER minutes = 0
+	var NUMBER seconds = 0
+
+	var i = seconds_per_hour
 
 	// using while-loop, becaus using '/' produces 
 	// Eroor: "Unknown variable or command '/';"
@@ -101,14 +110,6 @@ then
 		on_time_millis = on_time_millis - 1000
 	}
 
-	var seconds_per_hour = 3600
-	var seconds_per_minute = 60
-
-	var hours = 0
-	var minutes = 0
-	var seconds = 0
-
-	var i = seconds_per_hour
 	while ( i <= on_time_sec) {
 		i = i + seconds_per_hour
 		hours = hours + 1
