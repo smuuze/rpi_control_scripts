@@ -91,24 +91,17 @@ when
 	Item LOCATION_NAME_CLIENT_NAME_output_state_1_millis changed
 then
 
-	var NUMBER on_time_millis = LOCATION_NAME_CLIENT_NAME_output_state_1_millis.state
-	var NUMBER on_time_sec = 0
+	var on_time_millis = LOCATION_NAME_CLIENT_NAME_output_state_1_millis.state as Number
+	var on_time_sec = on_time_millis / 1000
 
-	var NUMBER seconds_per_hour = 3600
-	var NUMBER seconds_per_minute = 60
+	var seconds_per_hour = 3600
+	var seconds_per_minute = 60
 
-	var NUMBER hours = 0
-	var NUMBER minutes = 0
-	var NUMBER seconds = 0
+	var hours = 0
+	var minutes = 0
+	var seconds = 0
 
 	var i = seconds_per_hour
-
-	// using while-loop, becaus using '/' produces 
-	// Eroor: "Unknown variable or command '/';"
-	while (on_time_millis > 1000) {
-		on_time_sec = on_time_sec + 1
-		on_time_millis = on_time_millis - 1000
-	}
 
 	while ( i <= on_time_sec) {
 		i = i + seconds_per_hour
@@ -130,11 +123,163 @@ then
 	}
 
 	i = 0
-	while ( i <= on_time_sec) {
+	while ( i < on_time_sec) {
 		i = i + 1
 		seconds = seconds + 1
 	}
-
-	var stringTime = String::format("%1$02d:%2$02d:%3$02d", hours, minutes, seconds)
+	
+	on_time_sec = on_time_sec - seconds
+	
+	var stringTime = String::format("%1$02d h : %2$02d m : %3$02d s", hours, minutes, seconds)
 	LOCATION_NAME_CLIENT_NAME_light01_ontime.postUpdate(stringTime)
- end
+end
+
+// ------------------------------------------------------------------------
+
+rule "LOCATION_NAME_CLIENT_NAME_OUTPUTSTATE_2_received_update"
+when
+	Item LOCATION_NAME_CLIENT_NAME_output_state_2_millis changed
+then
+
+	var on_time_millis = LOCATION_NAME_CLIENT_NAME_output_state_2_millis.state as Number
+	var on_time_sec = on_time_millis / 1000
+
+	var seconds_per_hour = 3600
+	var seconds_per_minute = 60
+
+	var hours = 0
+	var minutes = 0
+	var seconds = 0
+
+	var i = seconds_per_hour
+
+	while ( i <= on_time_sec) {
+		i = i + seconds_per_hour
+		hours = hours + 1
+	}
+
+	if (hours * seconds_per_hour < on_time_sec) {
+		on_time_sec = on_time_sec - (hours * seconds_per_hour)
+	}
+
+	i = seconds_per_minute
+	while ( i <= on_time_sec) {
+		i = i + seconds_per_minute
+		minutes = minutes + 1
+	}
+
+	if (minutes * seconds_per_minute < on_time_sec) {
+		on_time_sec = on_time_sec - (minutes * seconds_per_hour)
+	}
+
+	i = 0
+	while ( i < on_time_sec) {
+		i = i + 1
+		seconds = seconds + 1
+	}
+	
+	on_time_sec = on_time_sec - seconds
+	
+	var stringTime = String::format("%1$02d h : %2$02d m : %3$02d s", hours, minutes, seconds)
+	LOCATION_NAME_CLIENT_NAME_light02_ontime.postUpdate(stringTime)
+end
+
+// ------------------------------------------------------------------------
+
+rule "LOCATION_NAME_CLIENT_NAME_OUTPUTSTATE_3_received_update"
+when
+	Item LOCATION_NAME_CLIENT_NAME_output_state_3_millis changed
+then
+
+	var on_time_millis = LOCATION_NAME_CLIENT_NAME_output_state_3_millis.state as Number
+	var on_time_sec = on_time_millis / 1000
+
+	var seconds_per_hour = 3600
+	var seconds_per_minute = 60
+
+	var hours = 0
+	var minutes = 0
+	var seconds = 0
+
+	var i = seconds_per_hour
+
+	while ( i <= on_time_sec) {
+		i = i + seconds_per_hour
+		hours = hours + 1
+	}
+
+	if (hours * seconds_per_hour < on_time_sec) {
+		on_time_sec = on_time_sec - (hours * seconds_per_hour)
+	}
+
+	i = seconds_per_minute
+	while ( i <= on_time_sec) {
+		i = i + seconds_per_minute
+		minutes = minutes + 1
+	}
+
+	if (minutes * seconds_per_minute < on_time_sec) {
+		on_time_sec = on_time_sec - (minutes * seconds_per_hour)
+	}
+
+	i = 0
+	while ( i < on_time_sec) {
+		i = i + 1
+		seconds = seconds + 1
+	}
+	
+	on_time_sec = on_time_sec - seconds
+	
+	var stringTime = String::format("%1$02d h : %2$02d m : %3$02d s", hours, minutes, seconds)
+	LOCATION_NAME_CLIENT_NAME_light03_ontime.postUpdate(stringTime)
+end
+
+// ------------------------------------------------------------------------
+
+rule "LOCATION_NAME_CLIENT_NAME_OUTPUTSTATE_4_received_update"
+when
+	Item LOCATION_NAME_CLIENT_NAME_output_state_4_millis changed
+then
+
+	var on_time_millis = LOCATION_NAME_CLIENT_NAME_output_state_4_millis.state as Number
+	var on_time_sec = on_time_millis / 1000
+
+	var seconds_per_hour = 3600
+	var seconds_per_minute = 60
+
+	var hours = 0
+	var minutes = 0
+	var seconds = 0
+
+	var i = seconds_per_hour
+
+	while ( i <= on_time_sec) {
+		i = i + seconds_per_hour
+		hours = hours + 1
+	}
+
+	if (hours * seconds_per_hour < on_time_sec) {
+		on_time_sec = on_time_sec - (hours * seconds_per_hour)
+	}
+
+	i = seconds_per_minute
+	while ( i <= on_time_sec) {
+		i = i + seconds_per_minute
+		minutes = minutes + 1
+	}
+
+	if (minutes * seconds_per_minute < on_time_sec) {
+		on_time_sec = on_time_sec - (minutes * seconds_per_hour)
+	}
+
+	i = 0
+	while ( i < on_time_sec) {
+		i = i + 1
+		seconds = seconds + 1
+	}
+	
+	on_time_sec = on_time_sec - seconds
+	
+	var stringTime = String::format("%1$02d h : %2$02d m : %3$02d s", hours, minutes, seconds)
+	LOCATION_NAME_CLIENT_NAME_light04_ontime.postUpdate(stringTime)
+end
