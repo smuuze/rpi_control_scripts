@@ -17,12 +17,14 @@ import LOCATION_NAME_CLIENT_NAME_output_state_2_millis;
 import LOCATION_NAME_CLIENT_NAME_output_state_3_millis;
 import LOCATION_NAME_CLIENT_NAME_output_state_4_millis;
 
+import LOCATION_NAME_CLIENT_NAME_json_string;
+
 
 // ------------------------------------------------------------------------
 
 rule "LOCATION_NAME_CLIENT_NAME_lastupdate_rule"
 when
-	Item LOCATION_NAME_CLIENT_NAME_system_uptime received update
+	Item LOCATION_NAME_CLIENT_NAME_json_string received update
 then
 	LOCATION_NAME_CLIENT_NAME_last_update.postUpdate( new DateTimeType() )
 end
