@@ -29,10 +29,10 @@ echo "Set TASMOTA: $2"
 sed -i "s/CLIENT_NAME/$2/g" myflat_$1_$2_TASMOTA.items
 sed -i "s/CLIENT_NAME/$2/g" myflat_$1_$2_TASMOTA.rules
 
-# Set __TIMER_DELAY__
+# Set __TIME_DELAY__
 
 echo "Moving File: myflat_$1_$2_TASMOTA.items"
-sed -i "s/__TIMER_DELAY__/$new_client_count/g" myflat_$1_$2_TASMOTA.rules
+sed -i "s/__TIME_DELAY__/$new_client_count/g" myflat_$1_$2_TASMOTA.rules
 
 mv /etc/openhab2/items/myflat_$1_$2_TASMOTA.item /etc/openhab2/items/myflat_$1_$2_TASMOTA.old_items > /dev/null
 

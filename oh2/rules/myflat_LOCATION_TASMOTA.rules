@@ -21,7 +21,7 @@ when
 then
 	if (TASMOTA_COMMON_report_start.state == ON) {
 
-		if (TASMOTA_COMMON_report_string.state == NULL {
+		if (TASMOTA_COMMON_report_string.state == NULL) {
 			TASMOTA_COMMON_report_string.postUpdate("");
 		}
 
@@ -51,4 +51,3 @@ then
 	LOCATION_NAME_CLIENT_NAME_energy_yersterday_string.postUpdate(LOCATION_NAME_CLIENT_NAME_energy_yesterday.state + " kW/h")
 	LOCATION_NAME_CLIENT_NAME_energy_power_string.postUpdate(LOCATION_NAME_CLIENT_NAME_energy_power.state + " W")
  end
- 
