@@ -1,0 +1,85 @@
+
+import TASMOTA_COMMON_report_string;
+import TASMOTA_COMMON_report_ready;
+import TASMOTA_COMMON_report_start;
+
+// --------------------------------------------------------------------------------------
+
+var tasmotaReportTimer
+
+// --------------------------------------------------------------------------------------
+
+/*
+ *	REPORT-SCHEDULE - FIRST STEP
+ *	This rule is triggered automatically to start a
+ * 	new report of all tasmota-clients.
+ *	The TASMOTA_COMMON_report_start is included by every client.
+ *	It is used as trigger to start an individual timer of each client.
+ */
+
+rule "TASMOTA_COMMON_REPORT_START_SCHEDULE"
+when
+	Time cron "0 01 22 1/1 * ? *" // 1 minute past  Midnight every day
+then
+	TASMOTA_COMMON_report_string.postUpdate("");
+	TASMOTA_COMMON_report_start.sendCommand("ON");
+
+	createTimer(now.plusSeconds(60)) [
+		TASMOTA_COMMON_report_start.sendCommand("OFF")
+	]
+end
+
+// --------------------------------------------------------------------------------------
+
+/**
+ *	REPORT-SCHEDULE - SECOND STEP
+ *	This rule controls the report-schedule timer.
+ *	Every time a new report is added by a tasmota-client the schedule-timer
+ *	is restarted, to wait for another tasmota-client.
+ *	Once the timer has reached its timeout, the report is send
+ */
+
+rule "TASMOTA_COMMON_REPORT_SCHEDULE"
+when
+	Item TASMOTA_COMMON_report_string changed
+then
+	if (TASMOTA_COMMON_report_schedule.state == NULL) {
+		TASMOTA_COMMON_report_schedule.sendCommand("OFF");
+	}
+
+	if (TASMOTA_COMMON_report_schedule.state == OFF) {
+
+		TASMOTA_COMMON_report_schedule.sendCommand("ON");
+
+		// start timer
+		tasmotaReportTimer = createTimer(now.plusSeconds(5)) [
+			TASMOTA_COMMON_report_ready.sendCommand("ON")
+			tasmotaReportTimer = NULL;
+		]
+
+	} else {
+		// restart timer
+      		tasmotaReportTimer.reschedule(now.plusSeconds(5)
+	}
+end
+
+// --------------------------------------------------------------------------------------
+
+/**
+ *	REPORT-SCHEDULE - THIRD STEP
+ *	If no more tasmota-client send an update with its report, the reportSchdedulTimer
+ *	reaches its limit and this rule is triggered. Here the whole report is send out.
+ */
+
+rule "TASMOTA_COMMON_SEND_REPORT"
+when
+	Item TASMOTA_COMMON_report_ready changed
+then
+	if (TASMOTA_COMMON_report_ready.state == ON) {
+
+		TASMOTA_COMMON_report_ready.sendCommand("OFF");
+		TASMOTA_COMMON_report_schedule.sendCommand("ON");
+
+		sendTelegram("sebastianIphoneX", TASMOTA_COMMON_report_string.state);
+	}
+end

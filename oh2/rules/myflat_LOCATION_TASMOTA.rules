@@ -10,16 +10,37 @@ import  LOCATION_NAME_CLIENT_NAME_energy_today_string;
 import  LOCATION_NAME_CLIENT_NAME_energy_yersterday_string;
 import  LOCATION_NAME_CLIENT_NAME_energy_power_string;
 
-rule "LOCATION_NAME_CLIENT_NAME_energy_info"
-when
-	Time cron "0 01 22 1/1 * ? *" // 1 minute past  Midnight every day
- then
+import TASMOTA_COMMON_report_string;
+import TASMOTA_COMMON_report_start;
 
-	sendTelegram("sebastianIphoneX", "LOCATION_NAME CLIENT_NAME Energy"
-			+ "\n- Total: " + LOCATION_NAME_CLIENT_NAME_energy_total.state + " kW/h"
-			+ "\n- Today: " + LOCATION_NAME_CLIENT_NAME_energy_today.state + " kW/h"
-			+ "\n- Yesterday :" + LOCATION_NAME_CLIENT_NAME_energy_yesterday.state + " kW/h")
- end
+// --------------------------------------------------------------------------------------
+
+rule "LOCATION_NAME_CLIENT_NAME_report_schedule"
+when
+	Item TASMOTA_COMMON_report_start changed
+then
+	if (TASMOTA_COMMON_report_start.state == ON) {
+
+		if (TASMOTA_COMMON_report_string.state == NULL {
+			TASMOTA_COMMON_report_string.postUpdate("");
+		}
+
+		var tempString = TASMOTA_COMMON_report_string.state;
+
+		createTimer(now.plusSeconds(__TIME_DELAY__)) [
+			TASMOTA_COMMON_report_stringTASMOTA_COMMON_report_string.postUpdate(
+				tempString
+				+ "LOCATION_NAME CLIENT_NAME Energy"
+				+ "\n- Total: " + LOCATION_NAME_CLIENT_NAME_energy_total.state + " kW/h"
+				+ "\n- Today: " + LOCATION_NAME_CLIENT_NAME_energy_today.state + " kW/h"
+				+ "\n- Yesterday :" + LOCATION_NAME_CLIENT_NAME_energy_yesterday.state + " kW/h"
+				+ "\n\n"
+			)
+		]
+	}
+end
+
+// --------------------------------------------------------------------------------------
 
 rule "LOCATION_NAME_CLIENT_NAME_energy_string"
 when
@@ -30,3 +51,4 @@ then
 	LOCATION_NAME_CLIENT_NAME_energy_yersterday_string.postUpdate(LOCATION_NAME_CLIENT_NAME_energy_yesterday.state + " kW/h")
 	LOCATION_NAME_CLIENT_NAME_energy_power_string.postUpdate(LOCATION_NAME_CLIENT_NAME_energy_power.state + " W")
  end
+ 

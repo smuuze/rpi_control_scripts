@@ -1,0 +1,4 @@
+String  TASMOTA_COMMON_report_string "A common string to send one report-message including information of all Tasmota-devices"
+Switch TASMOTA_COMMON_report_ready "This switch is enabled if the report-string has changed and a timeout of 10 seconds has passed"
+Switch TASMOTA_COMMON_report_schedule "This switch is enabled if a report is started"
+Switch TASMOTA_COMMON_report_start "This switch is enabled to start a new report-schedule"
