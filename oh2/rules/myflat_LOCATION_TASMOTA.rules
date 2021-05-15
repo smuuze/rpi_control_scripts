@@ -1,3 +1,7 @@
+//  CLIENT_NUMBER __CLIENT_NUMBER__
+
+// --------------------------------------------------------------------------------------
+
 import LOCATION_NAME_CLIENT_NAME_energy_json;
 
 import LOCATION_NAME_CLIENT_NAME_energy_total;
@@ -27,7 +31,7 @@ then
 
 		var tempString = TASMOTA_COMMON_report_string.state;
 
-		createTimer(now.plusSeconds(__TIME_DELAY__)) [
+		createTimer(now.plusSeconds(__CLIENT_NUMBER__)) [
 			TASMOTA_COMMON_report_stringTASMOTA_COMMON_report_string.postUpdate(
 				tempString
 				+ "LOCATION_NAME CLIENT_NAME Energy"

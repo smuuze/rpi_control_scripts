@@ -17,6 +17,8 @@ echo "New client number: $new_client_count"
 cp oh2/items/myflat_LOCATION_TASMOTA.items myflat_$1_$2_TASMOTA.items
 cp oh2/rules/myflat_LOCATION_TASMOTA.rules myflat_$1_$2_TASMOTA.rules
 
+# check if the file already exists
+
 #echo "Replacing incorrect file endings"
 #sed -i -e 's/\r$//g' myflat_$1_$2.items
 
@@ -32,10 +34,11 @@ echo "Set TASMOTA: $2"
 sed -i "s/CLIENT_NAME/$2/g" myflat_$1_$2_TASMOTA.items
 sed -i "s/CLIENT_NAME/$2/g" myflat_$1_$2_TASMOTA.rules
 
-# Set __TIME_DELAY__
+# Set __CLIENT_NUMBER__
 
 echo "Moving File: myflat_$1_$2_TASMOTA.items"
-sed -i "s/__TIME_DELAY__/$new_client_count/g" myflat_$1_$2_TASMOTA.rules
+sed -i "s/__CLIENT_NUMBER__/$new_client_count/g" myflat_$1_$2_TASMOTA.rules
+sed -i "s/__CLIENT_NUMBER__/$new_client_count/g" myflat_$1_$2_TASMOTA.items
 
 mv /etc/openhab2/items/myflat_$1_$2_TASMOTA.item /etc/openhab2/items/myflat_$1_$2_TASMOTA.old_items > /dev/null
 
