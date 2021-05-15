@@ -11,6 +11,9 @@
 client_count=$(find /etc/openhab2/items/ -maxdepth 1 -type f | grep TASMOTA.items | wc -l)
 new_client_count=$(expr $client_count + 1)
 
+echo "Available clients: $client_count"
+echo "New client number: $new_client_count"
+
 cp oh2/items/myflat_LOCATION_TASMOTA.items myflat_$1_$2_TASMOTA.items
 cp oh2/rules/myflat_LOCATION_TASMOTA.rules myflat_$1_$2_TASMOTA.rules
 
