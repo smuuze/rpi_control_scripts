@@ -16,6 +16,7 @@ import  LOCATION_NAME_CLIENT_NAME_energy_power_string;
 
 import TASMOTA_COMMON_report_string;
 import TASMOTA_COMMON_report_start;
+import LOCATION_NAME_CLIENT_NAME_switch_report_send_guard;
 
 // --------------------------------------------------------------------------------------
 
@@ -23,16 +24,28 @@ rule "LOCATION_NAME_CLIENT_NAME_report_schedule"
 when
 	Item TASMOTA_COMMON_report_start changed
 then
-	if (TASMOTA_COMMON_report_start.state == ON) {
+
+	if (LOCATION_NAME_CLIENT_NAME_switch_report_send_guard.state == NULL) {
+		LOCATION_NAME_CLIENT_NAME_switch_report_send_guard.sendCommand("OFF");
+	}
+
+	if (TASMOTA_COMMON_report_start.state == ON && LOCATION_NAME_CLIENT_NAME_switch_report_send_guard.state == OFF) {
+
+		LOCATION_NAME_CLIENT_NAME_switch_report_send_guard.sendCommand("ON");
+
+		createTimer(now.plusSeconds(60)) [
+			LOCATION_NAME_CLIENT_NAME_switch_report_send_guard.sendCommand("OFF");
+		]
+
 
 		if (TASMOTA_COMMON_report_string.state == NULL) {
 			TASMOTA_COMMON_report_string.postUpdate("");
 		}
 
-		var tempString = TASMOTA_COMMON_report_string.state;
+		var tempString = TASMOTA_COMMON_report_string.state.toString();
 
 		createTimer(now.plusSeconds(__CLIENT_NUMBER__)) [
-			TASMOTA_COMMON_report_stringTASMOTA_COMMON_report_string.postUpdate(
+			TASMOTA_COMMON_report_string.postUpdate(
 				tempString
 				+ "LOCATION_NAME CLIENT_NAME Energy"
 				+ "\n- Total: " + LOCATION_NAME_CLIENT_NAME_energy_total.state + " kW/h"

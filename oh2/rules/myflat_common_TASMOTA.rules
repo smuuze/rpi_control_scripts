@@ -26,10 +26,6 @@ when
 then
 	TASMOTA_COMMON_report_string.postUpdate("");
 	TASMOTA_COMMON_report_start.sendCommand("ON");
-
-	createTimer(now.plusSeconds(60)) [
-		TASMOTA_COMMON_report_start.sendCommand("OFF")
-	]
 end
 
 // --------------------------------------------------------------------------------------
@@ -50,9 +46,7 @@ then
 		TASMOTA_COMMON_report_schedule.sendCommand("OFF");
 	}
 
-	if (TASMOTA_COMMON_report_schedule.state == OFF) {
-
-		TASMOTA_COMMON_report_schedule.sendCommand("ON");
+	if (tasmotaReportTimer === null) {
 
 		// start timer
 		tasmotaReportTimer = createTimer(now.plusSeconds(5)) [
@@ -62,7 +56,7 @@ then
 
 	} else {
 		// restart timer
-      		tasmotaReportTimer.reschedule(now.plusSeconds(5)
+      		tasmotaReportTimer.reschedule(now.plusSeconds(5))
 	}
 end
 
@@ -81,8 +75,22 @@ then
 	if (TASMOTA_COMMON_report_ready.state == ON) {
 
 		TASMOTA_COMMON_report_ready.sendCommand("OFF");
-		TASMOTA_COMMON_report_schedule.sendCommand("ON");
+		sendTelegram("sebastianIphoneX", TASMOTA_COMMON_report_string.state.toString());
+	}
+end
 
-		sendTelegram("sebastianIphoneX", TASMOTA_COMMON_report_string.state);
+// --------------------------------------------------------------------------------------
+
+/**
+ *	This rule will switch off the start report item
+ */
+rule "TASMOTA_COMMON_END_REPORT"
+when
+	Item TASMOTA_COMMON_report_start changed
+then
+	if (TASMOTA_COMMON_report_start.state == ON) {
+		createTimer(now.plusSeconds(60)) [
+			TASMOTA_COMMON_report_start.sendCommand("OFF")
+		]
 	}
 end
