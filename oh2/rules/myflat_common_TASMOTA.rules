@@ -8,7 +8,7 @@ import TASMOTA_COMMON_report_start;
 
 // --------------------------------------------------------------------------------------
 
-var tasmotaReportTimer
+var Timer tasmotaReportTimer = null
 
 // --------------------------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ then
 		// start timer
 		tasmotaReportTimer = createTimer(now.plusSeconds(5)) [
 			TASMOTA_COMMON_report_ready.sendCommand("ON")
-			tasmotaReportTimer = NULL;
+			tasmotaReportTimer = null;
 		]
 
 	} else {
