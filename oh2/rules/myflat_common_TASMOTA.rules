@@ -24,7 +24,6 @@ rule "TASMOTA_COMMON_REPORT_START_SCHEDULE"
 when
 	Time cron "0 01 22 1/1 * ? *" // 1 minute past  Midnight every day
 then
-	TASMOTA_COMMON_report_string.postUpdate("");
 	TASMOTA_COMMON_report_start.sendCommand("ON");
 end
 
@@ -40,13 +39,15 @@ end
 
 rule "TASMOTA_COMMON_REPORT_SCHEDULE"
 when
-	Item TASMOTA_COMMON_report_string changed
+	Item TASMOTA_COMMON_report_start changed
 then
 	if (TASMOTA_COMMON_report_schedule.state == NULL) {
 		TASMOTA_COMMON_report_schedule.sendCommand("OFF");
 	}
 
 	if (tasmotaReportTimer === null) {
+
+		TASMOTA_COMMON_report_string.postUpdate("");
 
 		// start timer
 		tasmotaReportTimer = createTimer(now.plusSeconds(5)) [
@@ -76,6 +77,7 @@ then
 
 		TASMOTA_COMMON_report_ready.sendCommand("OFF");
 		sendTelegram("sebastianIphoneX", TASMOTA_COMMON_report_string.state.toString());
+		TASMOTA_COMMON_report_string.postUpdate("");
 	}
 end
 
@@ -89,6 +91,7 @@ when
 	Item TASMOTA_COMMON_report_start changed
 then
 	if (TASMOTA_COMMON_report_start.state == ON) {
+		TASMOTA_COMMON_report_string.postUpdate("");
 		createTimer(now.plusSeconds(60)) [
 			TASMOTA_COMMON_report_start.sendCommand("OFF")
 		]
