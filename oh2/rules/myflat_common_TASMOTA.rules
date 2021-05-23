@@ -40,6 +40,8 @@ end
 rule "TASMOTA_COMMON_REPORT_SCHEDULE"
 when
 	Item TASMOTA_COMMON_report_start changed
+	or
+	Item TASMOTA_COMMON_report_string changed
 then
 	if (TASMOTA_COMMON_report_schedule.state == NULL) {
 		TASMOTA_COMMON_report_schedule.sendCommand("OFF");

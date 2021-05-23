@@ -24,15 +24,7 @@ when
 	Item TASMOTA_COMMON_report_start changed
 then
 
-	if (LOCATION_NAME_CLIENT_NAME_switch_report_send_guard.state == NULL) {
-		LOCATION_NAME_CLIENT_NAME_switch_report_send_guard.sendCommand("OFF");
-	}
-
 	if (TASMOTA_COMMON_report_start.state == ON) {
-
-		if (TASMOTA_COMMON_report_string.state == NULL) {
-			//TASMOTA_COMMON_report_string.postUpdate("");
-		}
 
 		createTimer(now.plusSeconds(__CLIENT_NUMBER__)) [
 			TASMOTA_COMMON_report_string.postUpdate(
