@@ -1,0 +1,45 @@
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on     	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV POWER_ON" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_power_on]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_volume_down	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV VOLUME_DOWN" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_volume_down]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_volume_up	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV VOLUME_UP" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_volume_up]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_volume_mute	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV VOLUME_MUTE" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_volume_mute]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_play		"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV PLAY" 		{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_play]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_pause		"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV PAUSE" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_pause]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_stop		"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV STOP" 		{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_stop]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_up	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_UP" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_up]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_down	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_DOWN" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_down]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_list	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_LIST"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_list]"}
+
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_1	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_1"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_1]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_2	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_2"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_2]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_3	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_3"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_3]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_4	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_4"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_4]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_5	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_5"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_5]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_6	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_6"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_6]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_7	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_7"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_7]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_8	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_8"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_8]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_9	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_9"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_9]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_channel_0	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV CHANNEL_0"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_channel_0]"}
+
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_arrow_up	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV ARROW_UP"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_arrow_up]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_arrow_down	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV ARROW_DOWN"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_arrow_down]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_arrow_right	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV ARROW_RIGHT"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_arrow_right]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_arrow_left	"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV ARROW_LEFT"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_arrow_left]"}
+
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_enter		"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV ENTER"		{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_enter]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_return		"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV RETURN"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_return]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_exit		"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV EXIT"		{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_exit]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_guide		"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV GUIDE"		{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_guide]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_home		"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV HOME"		{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_home]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_source		"LOCATION_NAME IR_REMOTE_NAME SAMSUNG_TV SOURCE"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_samsung_tv_source]"}
+
+
+Switch	LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on		"LOCATION_NAME IR_REMOTE_NAME JVC_RADIO POWER_ON" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_jvc_radio_power_on]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_volume_down	"LOCATION_NAME IR_REMOTE_NAME JVC_RADIO VOLUME_DOWN" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_jvc_radio_volume_down]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_volume_up	"LOCATION_NAME IR_REMOTE_NAME JVC_RADIO VOLUME_UP"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_jvc_radio_volume_up]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_volume_mute	"LOCATION_NAME IR_REMOTE_NAME JVC_RADIO VOLUME_MUTE"	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_jvc_radio_volume_mute]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_play		"LOCATION_NAME IR_REMOTE_NAME JVC_RADIO PLAY" 		{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_jvc_radio_play]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_pause		"LOCATION_NAME IR_REMOTE_NAME JVC_RADIO PAUSE" 		{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_jvc_radio_pause]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_stop		"LOCATION_NAME IR_REMOTE_NAME JVC_RADIO STOP" 		{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_jvc_radio_stop]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_bass_up		"LOCATION_NAME IR_REMOTE_NAME JVC_RADIO BASS_UP" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_jvc_radio_bass_up]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_bass_down	"LOCATION_NAME IR_REMOTE_NAME JVC_RADIO BASS_DOWN" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_jvc_radio_bass_down]"}
+Switch	LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_sound_mode	"LOCATION_NAME IR_REMOTE_NAME JVC_RADIO SOUND_MODE" 	{mqtt=">[pluto:myflat/LOCATION_NAME/IR_REMOTE_NAME:command:ON:ir_remote_jvc_radio_sound_mode]"}
