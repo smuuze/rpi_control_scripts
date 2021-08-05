@@ -28,6 +28,14 @@ when
 	Time cron "0 */10 * ? * *"
 then
 	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
+		LOCATION_NAME_POWER_SWITCHING_tv_on.sendCommand("OFF")
+	}
+	
+	if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == ON) {
+		LOCATION_NAME_POWER_SWITCHING_radio_on.sendCommand("OFF")
+	}
+
+	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
 		// TV is still on
 
 	} else if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == ON) {
