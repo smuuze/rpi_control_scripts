@@ -1,0 +1,2 @@
+Switch LOCATION_NAME_POWER_SWITCHING_tv_on "This switch is used to power on the TV in LOCATION_NAME"
+Switch LOCATION_NAME_POWER_SWITCHING_radio_on "This switch is used to power on the radio in LOCATION_NAME"

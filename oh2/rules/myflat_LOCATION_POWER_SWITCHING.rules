@@ -1,0 +1,114 @@
+
+import LOCATION_NAME_POWER_SWITCHING_tv_on;
+import LOCATION_NAME_POWER_SWITCHING_radio_on;
+
+import LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on;
+import LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on;
+
+import LOCATION_NAME_TASMOTA_NAME_power1;
+
+// --------------------------------------------------------------------------------------
+
+// Initialize all variables of this set to thier default values
+rule "LOCATION_NAME_POWER_SWITCHING_startup"
+when
+	System started
+then
+	LOCATION_NAME_POWER_SWITCHING_tv_on.sendCommand("OFF")
+	LOCATION_NAME_POWER_SWITCHING_radio_on.sendCOmmand("OFF")
+end
+
+// --------------------------------------------------------------------------------------
+
+// Rule to check every 10 minutes if all devices of this power-switching instance are off
+// If so, the raspberry-pi is powered off and the power-switching socket
+// is powered off with a short delay (1 minute)
+rule "LOCATION_NAME_POWER_SWITCHING_guard"
+when
+	Time cron "0 */10 * ? * *"
+then
+	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
+		// TV is still on
+
+	} else if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == ON) {
+		// radio is still on
+
+	} else if (LOCATION_NAME_TASMOTA_NAME_power1.state == ON) {
+		sendTelegram("sebastianIphoneX", "Switch off LOCATION_NAME");
+		// Tasmota is on -> we need to shutdown the system
+	}
+end
+
+// --------------------------------------------------------------------------------------
+
+// Rule to switch on and off a TV device
+// if the tasmota device is not on, it will eb switched on in this rule
+// In this case the TV is switched on with a short delay (2 seconds)
+//
+// INPUT:	LOCATION_NAME_POWER_SWITCHING_tv_on.state changed to on
+//
+rule "LOCATION_NAME_POWER_SWITCHING_tv_on_off"
+when
+	Item LOCATION_NAME_POWER_SWITCHING_tv_on received update
+then
+	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
+
+		if (LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.state == OFF) {
+
+			if (LOCATION_NAME_TASMOTA_NAME_power1.state == OFF) {
+				
+				LOCATION_NAME_TASMOTA_NAME_power1.sendCommand("ON")
+				createTimer(now.plusSeconds(2)) [
+					LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("ON")
+				]
+
+			} else {
+				LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("ON")
+			}
+		}
+
+	} else if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == OFF) {
+
+		if (LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.state == ON) {
+			LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("OFF")
+		}
+	}
+end
+
+// --------------------------------------------------------------------------------------
+
+// Rule to switch on and off a RADIO device
+// if the tasmota device is not on, it will eb switched on in this rule
+// In this case the RADIO is switched on with a short delay (2 seconds)
+//
+// INPUT:	LOCATION_NAME_POWER_SWITCHING_radio_on.state changed to on
+//
+rule "LOCATION_NAME_POWER_SWITCHING_radio_on_off"
+when
+	Item LOCATION_NAME_POWER_SWITCHING_radio_on received update
+then
+	if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == ON) {
+
+		if (LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.state == OFF) {
+
+			if (LOCATION_NAME_TASMOTA_NAME_power1.state == OFF) {
+				
+				LOCATION_NAME_TASMOTA_NAME_power1.sendCommand("ON")
+				createTimer(now.plusSeconds(2)) [
+					LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("ON")
+				]
+
+			} else {
+				LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("ON")
+			}
+		}
+
+	} else if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == OFF) {
+
+		if (LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.state == ON) {
+			LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("OFF")
+		}
+	}
+end
+
+// --------------------------------------------------------------------------------------
