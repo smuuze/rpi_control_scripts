@@ -15,7 +15,7 @@ when
 	System started
 then
 	LOCATION_NAME_POWER_SWITCHING_tv_on.sendCommand("OFF")
-	LOCATION_NAME_POWER_SWITCHING_radio_on.sendCOmmand("OFF")
+	LOCATION_NAME_POWER_SWITCHING_radio_on.sendCommand("OFF")
 end
 
 // --------------------------------------------------------------------------------------
