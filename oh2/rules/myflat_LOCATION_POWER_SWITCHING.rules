@@ -33,7 +33,7 @@ then
 	} else if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == ON) {
 		// radio is still on
 
-	} else if (LOCATION_NAME_TASMOTA_NAME_power1.state == ON) {
+	} else if (TASMOTA_NAME_power1.state == ON) {
 		sendTelegram("sebastianIphoneX", "Switch off LOCATION_NAME");
 		// Tasmota is on -> we need to shutdown the system
 	}
