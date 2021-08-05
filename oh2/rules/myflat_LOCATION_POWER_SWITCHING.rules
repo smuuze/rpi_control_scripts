@@ -5,7 +5,7 @@ import LOCATION_NAME_POWER_SWITCHING_radio_on;
 import LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on;
 import LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on;
 
-import LOCATION_NAME_TASMOTA_NAME_power1;
+import TASMOTA_NAME_power1;
 
 // --------------------------------------------------------------------------------------
 
@@ -55,9 +55,9 @@ then
 
 		if (LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.state == OFF) {
 
-			if (LOCATION_NAME_TASMOTA_NAME_power1.state == OFF) {
+			if (TASMOTA_NAME_power1.state == OFF) {
 				
-				LOCATION_NAME_TASMOTA_NAME_power1.sendCommand("ON")
+				TASMOTA_NAME_power1.sendCommand("ON")
 				createTimer(now.plusSeconds(2)) [
 					LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("ON")
 				]
@@ -91,9 +91,9 @@ then
 
 		if (LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.state == OFF) {
 
-			if (LOCATION_NAME_TASMOTA_NAME_power1.state == OFF) {
+			if (TASMOTA_NAME_power1.state == OFF) {
 				
-				LOCATION_NAME_TASMOTA_NAME_power1.sendCommand("ON")
+				TASMOTA_NAME_power1.sendCommand("ON")
 				createTimer(now.plusSeconds(2)) [
 					LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("ON")
 				]
