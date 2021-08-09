@@ -9,17 +9,6 @@ import TASMOTA_NAME_power1;
 
 // --------------------------------------------------------------------------------------
 
-// Initialize all variables of this set to thier default values
-rule "LOCATION_NAME_POWER_SWITCHING_startup"
-when
-	System started
-then
-	LOCATION_NAME_POWER_SWITCHING_tv_on.sendCommand("OFF")
-	LOCATION_NAME_POWER_SWITCHING_radio_on.sendCommand("OFF")
-end
-
-// --------------------------------------------------------------------------------------
-
 // Rule to check every 10 minutes if all devices of this power-switching instance are off
 // If so, the raspberry-pi is powered off and the power-switching socket
 // is powered off with a short delay (1 minute)
@@ -27,12 +16,13 @@ rule "LOCATION_NAME_POWER_SWITCHING_guard"
 when
 	Time cron "0 */10 * ? * *"
 then
-	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
-		LOCATION_NAME_POWER_SWITCHING_tv_on.sendCommand("OFF")
+
+	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == NULL) {
+		//LOCATION_NAME_POWER_SWITCHING_tv_on.sendCommand("OFF")
 	}
 	
-	if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == ON) {
-		LOCATION_NAME_POWER_SWITCHING_radio_on.sendCommand("OFF")
+	if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == NULL) {
+		//LOCATION_NAME_POWER_SWITCHING_radio_on.sendCommand("OFF")
 	}
 
 	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
@@ -42,8 +32,17 @@ then
 		// radio is still on
 
 	} else if (TASMOTA_NAME_power1.state == ON) {
-		sendTelegram("sebastianIphoneX", "Switch off LOCATION_NAME");
-		// Tasmota is on -> we need to shutdown the system
+		//sendTelegram("TELEGRAM_NAME", "Switch off LOCATION_NAME");
+		// TODO: Power-Down raspberry pi
+		// TASMOTA_NAME is on -> we need to shutdown the system
+
+		sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RPi off");
+		RPI_NAME_radio_shutdown.sendCommand("ON");
+
+		createTimer(now.plusSeconds(60)) [
+			TASMOTA_NAME_power1.sendCommand("OFF")
+			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TASMOTA_NAME off");
+		]
 	}
 end
 
@@ -59,26 +58,37 @@ rule "LOCATION_NAME_POWER_SWITCHING_tv_on_off"
 when
 	Item LOCATION_NAME_POWER_SWITCHING_tv_on received update
 then
+
+	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == NULL) {
+		LOCATION_NAME_POWER_SWITCHING_tv_on.sendCommand("OFF")
+	}
+
+	if (TASMOTA_NAME_power1.state == NULL) {
+		TASMOTA_NAME_power1.sendCommand("OFF")
+	}
+
 	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
 
-		if (LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.state == OFF) {
-
-			if (TASMOTA_NAME_power1.state == OFF) {
+		if (TASMOTA_NAME_power1.state == OFF) {
 				
-				TASMOTA_NAME_power1.sendCommand("ON")
-				createTimer(now.plusSeconds(2)) [
-					LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("ON")
-				]
+			TASMOTA_NAME_power1.sendCommand("ON")
+			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TASMOTA_NAME on");
 
-			} else {
+			createTimer(now.plusSeconds(7)) [
 				LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("ON")
-			}
+				sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TV on");
+			]
+
+		} else {
+			LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("ON")
+			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TV on");
 		}
 
 	} else if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == OFF) {
 
-		if (LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.state == ON) {
-			LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("OFF")
+		if (TASMOTA_NAME_power1.state == ON) {
+			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TV off");
+			LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("ON")
 		}
 	}
 end
@@ -95,26 +105,36 @@ rule "LOCATION_NAME_POWER_SWITCHING_radio_on_off"
 when
 	Item LOCATION_NAME_POWER_SWITCHING_radio_on received update
 then
+	if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == NULL) {
+		LOCATION_NAME_POWER_SWITCHING_radio_on.sendCommand("OFF")
+	}
+
+	if (TASMOTA_NAME_power1.state == NULL) {
+		TASMOTA_NAME_power1.sendCommand("OFF")
+	}
+
 	if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == ON) {
 
-		if (LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.state == OFF) {
-
-			if (TASMOTA_NAME_power1.state == OFF) {
+		if (TASMOTA_NAME_power1.state == OFF) {
 				
-				TASMOTA_NAME_power1.sendCommand("ON")
-				createTimer(now.plusSeconds(2)) [
-					LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("ON")
-				]
+			TASMOTA_NAME_power1.sendCommand("ON")
+			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TASMOTA_NAME on");
 
-			} else {
+			createTimer(now.plusSeconds(7)) [
 				LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("ON")
-			}
+				sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RADIO on");
+			]
+
+		} else {
+			LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("ON")
+			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RADIO on");
 		}
 
 	} else if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == OFF) {
 
-		if (LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.state == ON) {
-			LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("OFF")
+		if (TASMOTA_NAME_power1.state == ON) {
+			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RADIO off");
+			LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("ON")
 		}
 	}
 end

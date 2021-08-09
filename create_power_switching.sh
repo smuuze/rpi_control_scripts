@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Usage:
-# ./create_power_switching.sh <LOCATION_NAME> <CLIENT_NAME> <TASMOTA_NAME> <THRESHOLD>
+# ./create_power_switching.sh <LOCATION_NAME> <CLIENT_NAME> <TASMOTA_NAME> <RPI_NAME> <THRESHOLD> <TELEGRAM_NAME>
 #
 #
 #
@@ -25,9 +25,17 @@ echo "Set TASMOTA_NAME: $3"
 sed -i "s/TASMOTA_NAME/$3/g" myflat_$1_POWER_SWITCHING.items
 sed -i "s/TASMOTA_NAME/$3/g" myflat_$1_POWER_SWITCHING.rules
 
-echo "Set THRESHOLD: $4"
-sed -i "s/THRESHOLD/$4/g" myflat_$1_POWER_SWITCHING.items
-sed -i "s/THRESHOLD/$4/g" myflat_$1_POWER_SWITCHING.rules
+echo "Set RPI: $4"
+sed -i "s/RPI_NAME/$4/g" myflat_$1_POWER_SWITCHING.items
+sed -i "s/RPI_NAME/$4/g" myflat_$1_POWER_SWITCHING.rules
+
+echo "Set THRESHOLD: $5"
+sed -i "s/THRESHOLD/$5/g" myflat_$1_POWER_SWITCHING.items
+sed -i "s/THRESHOLD/$5/g" myflat_$1_POWER_SWITCHING.rules
+
+echo "Set TELEGRAM: $5"
+sed -i "s/TELEGRAM_NAME/$6/g" myflat_$1_POWER_SWITCHING.items
+sed -i "s/TELEGRAM_NAME/$6/g" myflat_$1_POWER_SWITCHING.rules
 
 echo "Moving File: myflat_$1_POWER_SWITCHING.items"
 
