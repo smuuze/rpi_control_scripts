@@ -14,35 +14,73 @@ import TASMOTA_NAME_power1;
 // is powered off with a short delay (1 minute)
 rule "LOCATION_NAME_POWER_SWITCHING_guard"
 when
-	Time cron "0 */10 * ? * *"
+	Time cron "0 */5 * ? * *"
 then
 
-	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == NULL) {
-		//LOCATION_NAME_POWER_SWITCHING_tv_on.sendCommand("OFF")
-	}
-	
-	if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == NULL) {
-		//LOCATION_NAME_POWER_SWITCHING_radio_on.sendCommand("OFF")
-	}
+	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == OFF && LOCATION_NAME_POWER_SWITCHING_radio_on.state == OFF) {
 
-	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
+		 if (TASMOTA_NAME_power1.state == ON) {
+
+			var actualPower = LOCATION_NAME_CLIENT_NAME_energy_power.state as Number
+			if (actualPower < THRESHOLD && actualPower != 0) {
+
+				//sendTelegram("TELEGRAM_NAME", "Switch off LOCATION_NAME");
+				// TODO: Power-Down raspberry pi
+				// TASMOTA_NAME is on -> we need to shutdown the system
+
+				//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RPi off");
+				RPI_NAME_radio_shutdown.sendCommand("ON");
+
+				createTimer(now.plusSeconds(60)) [
+					TASMOTA_NAME_power1.sendCommand("OFF")
+					//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TASMOTA_NAME off");
+				]
+
+			} else if (actualPower != 0) {
+
+				//sendTelegram("TELEGRAM_NAME", "All devices off but actual power " + actualPower + " Watt is above than THRESHOLD Watt")
+				// This is incorrect -- LOCATION_NAME_POWER_SWITCHING_tv_on.postUpdate("OFF");
+			}
+		}
+
+	} if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
 		// TV is still on
+
+		if (TASMOTA_NAME_power1.state == ON) {
+
+			if (LOCATION_NAME_CLIENT_NAME_energy_power.state != null) {
+
+				var actualPower = LOCATION_NAME_CLIENT_NAME_energy_power.state as Number
+				if (actualPower < THRESHOLD && actualPower != 0) {
+					//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_tv_on is on but actual power " + actualPower + " Watt is below than THRESHOLD Watt")
+					LOCATION_NAME_POWER_SWITCHING_tv_on.postUpdate("OFF");
+				}
+			}
+
+		} else if (TASMOTA_NAME_power1.state == OFF) {
+			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_tv_on is on but TASMOTA_NAME is off")
+			LOCATION_NAME_POWER_SWITCHING_tv_on.postUpdate("OFF");
+		}
 
 	} else if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == ON) {
 		// radio is still on
 
-	} else if (TASMOTA_NAME_power1.state == ON) {
-		//sendTelegram("TELEGRAM_NAME", "Switch off LOCATION_NAME");
-		// TODO: Power-Down raspberry pi
-		// TASMOTA_NAME is on -> we need to shutdown the system
+		if (TASMOTA_NAME_power1.state == ON) {
 
-		sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RPi off");
-		RPI_NAME_radio_shutdown.sendCommand("ON");
+			if (TASMOTA_NAME_energy_power.state != null) {
 
-		createTimer(now.plusSeconds(60)) [
-			TASMOTA_NAME_power1.sendCommand("OFF")
-			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TASMOTA_NAME off");
-		]
+				var actualPower = TASMOTA_NAME_energy_power.state as Number
+				if (actualPower < THRESHOLD && actualPower != 0) {
+					//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_radio_on is on but actual power " + actualPower + " Watt is below than THRESHOLD Watt")
+					LOCATION_NAME_POWER_SWITCHING_radio_on.postUpdate("OFF");
+				}
+			}
+
+		} else if (TASMOTA_NAME_power1.state == OFF) {
+			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_radio_on is on but TASMOTA_NAME is off")
+			LOCATION_NAME_POWER_SWITCHING_radio_on.postUpdate("OFF");
+		}
+
 	}
 end
 
@@ -58,11 +96,6 @@ rule "LOCATION_NAME_POWER_SWITCHING_tv_on_off"
 when
 	Item LOCATION_NAME_POWER_SWITCHING_tv_on received update
 then
-
-	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == NULL) {
-		LOCATION_NAME_POWER_SWITCHING_tv_on.sendCommand("OFF")
-	}
-
 	if (TASMOTA_NAME_power1.state == NULL) {
 		TASMOTA_NAME_power1.sendCommand("OFF")
 	}
@@ -72,22 +105,22 @@ then
 		if (TASMOTA_NAME_power1.state == OFF) {
 				
 			TASMOTA_NAME_power1.sendCommand("ON")
-			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TASMOTA_NAME on");
+			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TASMOTA_NAME on");
 
 			createTimer(now.plusSeconds(7)) [
 				LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("ON")
-				sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TV on");
+				//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TV on");
 			]
 
 		} else {
 			LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("ON")
-			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TV on");
+			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TV on");
 		}
 
 	} else if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == OFF) {
 
 		if (TASMOTA_NAME_power1.state == ON) {
-			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TV off");
+			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TV off");
 			LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("ON")
 		}
 	}
@@ -105,10 +138,6 @@ rule "LOCATION_NAME_POWER_SWITCHING_radio_on_off"
 when
 	Item LOCATION_NAME_POWER_SWITCHING_radio_on received update
 then
-	if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == NULL) {
-		LOCATION_NAME_POWER_SWITCHING_radio_on.sendCommand("OFF")
-	}
-
 	if (TASMOTA_NAME_power1.state == NULL) {
 		TASMOTA_NAME_power1.sendCommand("OFF")
 	}
@@ -118,22 +147,22 @@ then
 		if (TASMOTA_NAME_power1.state == OFF) {
 				
 			TASMOTA_NAME_power1.sendCommand("ON")
-			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TASMOTA_NAME on");
+			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME TASMOTA_NAME on");
 
 			createTimer(now.plusSeconds(7)) [
 				LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("ON")
-				sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RADIO on");
+				//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RADIO on");
 			]
 
 		} else {
 			LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("ON")
-			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RADIO on");
+			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RADIO on");
 		}
 
 	} else if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == OFF) {
 
 		if (TASMOTA_NAME_power1.state == ON) {
-			sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RADIO off");
+			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RADIO off");
 			LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("ON")
 		}
 	}
