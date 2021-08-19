@@ -1,11 +1,16 @@
 
 import LOCATION_NAME_POWER_SWITCHING_tv_on;
 import LOCATION_NAME_POWER_SWITCHING_radio_on;
+import LOCATION_NAME_POWER_SWITCHING_guard_pause;
 
 import LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on;
 import LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on;
 
 import TASMOTA_NAME_power1;
+
+// --------------------------------------------------------------------------------------
+
+var Timer LOCATION_NAME_POWER_SWITCHING_guardPauseTimer = null
 
 // --------------------------------------------------------------------------------------
 
@@ -19,7 +24,7 @@ then
 
 	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == OFF && LOCATION_NAME_POWER_SWITCHING_radio_on.state == OFF) {
 
-		 if (TASMOTA_NAME_power1.state == ON) {
+		 if (TASMOTA_NAME_power1.state == ON && LOCATION_NAME_POWER_SWITCHING_guard_pause.state == OFF) {
 
 			var actualPower = LOCATION_NAME_CLIENT_NAME_energy_power.state as Number
 			if (actualPower < THRESHOLD && actualPower != 0) {
@@ -41,24 +46,25 @@ then
 				//sendTelegram("TELEGRAM_NAME", "All devices off but actual power " + actualPower + " Watt is above than THRESHOLD Watt")
 				// This is incorrect -- LOCATION_NAME_POWER_SWITCHING_tv_on.postUpdate("OFF");
 			}
+
 		}
 
-	} if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
+	} else if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
 		// TV is still on
 
 		if (TASMOTA_NAME_power1.state == ON) {
 
-			if (LOCATION_NAME_CLIENT_NAME_energy_power.state != null) {
+			if (TASMOTA_NAME_energy_power.state != null) {
 
-				var actualPower = LOCATION_NAME_CLIENT_NAME_energy_power.state as Number
+				var actualPower = TASMOTA_NAME_energy_power.state as Number
 				if (actualPower < THRESHOLD && actualPower != 0) {
-					//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_tv_on is on but actual power " + actualPower + " Watt is below than THRESHOLD Watt")
+					//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_tv_on is on but actual power " + actualPower + " Watt is below than 6 Watt")
 					LOCATION_NAME_POWER_SWITCHING_tv_on.postUpdate("OFF");
 				}
 			}
 
 		} else if (TASMOTA_NAME_power1.state == OFF) {
-			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_tv_on is on but TASMOTA_NAME is off")
+			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_tv_on is on but livingroom_tasmota7 is off")
 			LOCATION_NAME_POWER_SWITCHING_tv_on.postUpdate("OFF");
 		}
 
@@ -71,16 +77,15 @@ then
 
 				var actualPower = TASMOTA_NAME_energy_power.state as Number
 				if (actualPower < THRESHOLD && actualPower != 0) {
-					//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_radio_on is on but actual power " + actualPower + " Watt is below than THRESHOLD Watt")
+					//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_radio_on is on but actual power " + actualPower + " Watt is below than 6 Watt")
 					LOCATION_NAME_POWER_SWITCHING_radio_on.postUpdate("OFF");
 				}
 			}
 
 		} else if (TASMOTA_NAME_power1.state == OFF) {
-			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_radio_on is on but TASMOTA_NAME is off")
+			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME_POWER_SWITCHING_radio_on is on but livingroom_tasmota7 is off")
 			LOCATION_NAME_POWER_SWITCHING_radio_on.postUpdate("OFF");
 		}
-
 	}
 end
 
@@ -96,11 +101,16 @@ rule "LOCATION_NAME_POWER_SWITCHING_tv_on_off"
 when
 	Item LOCATION_NAME_POWER_SWITCHING_tv_on received update
 then
+
 	if (TASMOTA_NAME_power1.state == NULL) {
 		TASMOTA_NAME_power1.sendCommand("OFF")
 	}
 
 	if (LOCATION_NAME_POWER_SWITCHING_tv_on.state == ON) {
+
+		// if the state of the guard NULL, because of system restart
+		// it will be set here into a correct state
+		LOCATION_NAME_POWER_SWITCHING_guard_pause.sendCommand("OFF")
 
 		if (TASMOTA_NAME_power1.state == OFF) {
 				
@@ -124,6 +134,23 @@ then
 			LOCATION_NAME_IR_REMOTE_NAME_samsung_tv_power_on.sendCommand("ON")
 		}
 	}
+
+	// prevent the guard rule to switch back the new state of the TV
+	// because the power-value of TASMOTA_NAME was not update yet
+	LOCATION_NAME_POWER_SWITCHING_guard_pause.sendCommand("ON")
+
+	if (LOCATION_NAME_POWER_SWITCHING_guardPauseTimer === null) {
+
+		LOCATION_NAME_POWER_SWITCHING_guardPauseTimer = createTimer(now.plusSeconds(600)) [
+			//sendTelegram("TELEGRAM_NAME", "Guard pause over");
+			LOCATION_NAME_POWER_SWITCHING_guard_pause.sendCommand("OFF")
+			LOCATION_NAME_POWER_SWITCHING_guardPauseTimer = null;
+		]
+		
+	} else {
+		
+      		LOCATION_NAME_POWER_SWITCHING_guardPauseTimer.reschedule(now.plusSeconds(600))
+	}
 end
 
 // --------------------------------------------------------------------------------------
@@ -138,11 +165,16 @@ rule "LOCATION_NAME_POWER_SWITCHING_radio_on_off"
 when
 	Item LOCATION_NAME_POWER_SWITCHING_radio_on received update
 then
+
 	if (TASMOTA_NAME_power1.state == NULL) {
 		TASMOTA_NAME_power1.sendCommand("OFF")
 	}
 
 	if (LOCATION_NAME_POWER_SWITCHING_radio_on.state == ON) {
+
+		// if the state of the guard NULL, because of system restart
+		// it will be set here into a correct state
+		LOCATION_NAME_POWER_SWITCHING_guard_pause.sendCommand("OFF")
 
 		if (TASMOTA_NAME_power1.state == OFF) {
 				
@@ -165,6 +197,23 @@ then
 			//sendTelegram("TELEGRAM_NAME", "LOCATION_NAME RADIO off");
 			LOCATION_NAME_IR_REMOTE_NAME_jvc_radio_power_on.sendCommand("ON")
 		}
+	}
+
+	// prevent the guard rule to switch back the new state of the TV
+	// because the power-value of TASMOTA_NAME was not update yet
+	LOCATION_NAME_POWER_SWITCHING_guard_pause.sendCommand("ON")
+
+	if (LOCATION_NAME_POWER_SWITCHING_guardPauseTimer === null) {
+
+		LOCATION_NAME_POWER_SWITCHING_guardPauseTimer = createTimer(now.plusSeconds(600)) [
+			//sendTelegram("TELEGRAM_NAME", "Guard pause over");
+			LOCATION_NAME_POWER_SWITCHING_guard_pause.sendCommand("OFF")
+			LOCATION_NAME_POWER_SWITCHING_guardPauseTimer = null;
+		]
+
+	} else {
+		
+      		LOCATION_NAME_POWER_SWITCHING_guardPauseTimer.reschedule(now.plusSeconds(600))
 	}
 end
 
